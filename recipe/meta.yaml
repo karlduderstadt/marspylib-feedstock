@@ -1,5 +1,5 @@
 {% set name = "marspylib" %}
-{% set version = "0.1.4" %}
+{% set version = "0.3.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: cd5efd9d183c14d2acfbe737c4c85b51374d8956f6992e567b15a8aab478439b
+  sha256: 75baf916be540e9bb86ed31ec33890876833802a9c9d4725b8b5f7dfc36699c0
 
 build:
   noarch: python
@@ -16,27 +16,30 @@ build:
 
 requirements:
   host:
-    - python >=3.6
+    - python >=3.8
     - pip
   run:
-    - python >=3.6
-    - jpype1 >=1.3.0
-    - pyimagej
-    - scyjava
+    - python >=3.8
+    - numpy
+    - pandas
     - matplotlib-base
 
 test:
   imports:
     - marspylib
+    - marspylib.yama
 
 about:
   home: https://github.com/duderstadt-lab/marspylib
-  summary: 'Molecule Archive Suite python interaction library'
+  summary: 'Pure-Python library for reading and writing Mars Molecule Archives (.yama)'
   description: |
-    marspylib is a collection of utility methods for working with
-    mars in python and includes a launchFiji script to start
-    Fiji from python using PyImageJ. This adds full conda python 3
-    scripting access in Fiji.
+    marspylib is a pure-Python library for reading and writing Mars
+    MoleculeArchive (.yama) files -- no JVM, no Fiji install required. It
+    includes a Jackson-Smile-binary codec, an object model matching
+    mars-core's record schema, and utility functions for working with Mars
+    data in Python. Optional S3 support (opening/saving archives directly on
+    S3 or any S3-compatible endpoint) needs boto3, installed separately
+    (e.g. `pip install marspylib[s3]`, or `conda install boto3`).
   license: BSD-2-Clause
   license_family: BSD
   license_file: LICENSE.txt
